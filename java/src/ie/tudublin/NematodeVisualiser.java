@@ -6,85 +6,63 @@ import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
 
-public class NematodeVisualiser extends PApplet
-{
+public class NematodeVisualiser extends PApplet {
 	ArrayList<Nematode> nematodes = new ArrayList<Nematode>();
 
-	public float border;
+	Nematode nema = null;
 
-	Nematode one = null;
-	Nematode two = null;
+	public void keyPressed() {
+		if (keyCode == LEFT) {
 
-	public void keyPressed()
-	{
-		for(Nematode n:nematodes)
-		{
-			if(keyCode == LEFT)
-			{
-				if(one == null)
-				{
-					one = n;
-					break;
-				}
+		}
 
-				else if(two == null)
-				{
-					two = n;
-					break;
-				}
-
-				else
-				{
-					one = n;
-					two = null;
-					break;
-				}
-			}
-		}		
 	}
 
-	public void settings()
-	{
+	public void settings() {
 		size(800, 800);
 	}
 
-	public void setup() 
-	{
+	public void setup() {
 		colorMode(HSB);
 		background(0);
-		smooth();				
+		smooth();
 	}
 
-	void printNematodes()
-	{
-		for(Nematode n:nematodes)
-		{
+	void printNematodes() {
+		for (Nematode n : nematodes) {
 			System.out.println(n);
 		}
 	}
 
-	void loadNematodes()
-	{
+	void loadNematodes() {
 		Table table = loadTable("nematodes.csv", "header");
-		for(TableRow t:table.rows())
-		{
+		for (TableRow t : table.rows()) {
 			Nematode n = new Nematode(t);
 			nematodes.add(n);
-		} 
+		}
 	}
 
-	public void drawNematodes()
-	{
-		for(Nematode n:nematodes)
-		{
+	public void drawNematodes() {
+		for (Nematode n : nematodes) {
 			n.render(this);
 		}
 	}
 
-	public void draw()
-	{
+	public void draw() {
 		background(0);
 		drawNematodes();
+
+		float cx = map(nema.nemaLength(), 50, 50, width / 2, height / 2);
+		float cy = map(nema.nemaLength(), 50, 50, width / 2, height / 2);
+
+		if (nema != null) {
+			for (int i = 0; i < nema.nemaLength(); i++) {
+				fill(255, 255, 0);
+				circle(cx, cy, nema.nemaLength());
+				noFill();
+			}
+
+		}
 
 	}
 }
